@@ -124,29 +124,29 @@ export class App extends Component {
 
   render() {
     return (
-      <div className={css.App}>
+      <>
         <Searchbar onSubmit={this.handleSubmit} />
+        <div className={css.App}>
+          {this.state.images && this.state.images.length > 0 && (
+            <ImageGallery
+              images={this.state.images}
+              handlerOpenModal={this.handlerOpenModal}
+            />
+          )}
 
-        {this.state.images && this.state.images.length > 0 && (
-          <ImageGallery
-            images={this.state.images}
-            handlerOpenModal={this.handlerOpenModal}
-          />
-        )}
+          {this.state.isLoading && <Loader />}
 
+          {this.state.openModal && (
+            <Modal
+              handlerCloseModal={this.handlerCloseModal}
+              modalData={this.state.modalData}
+            />
+          )}
+        </div>
         {this.state.loadMoreBtn && !this.state.isLoading && (
           <LoadMoreButton onClick={this.loadMoreBtn} />
         )}
-
-        {this.state.isLoading && <Loader />}
-
-        {this.state.openModal && (
-          <Modal
-            handlerCloseModal={this.handlerCloseModal}
-            modalData={this.state.modalData}
-          />
-        )}
-      </div>
+      </>
     );
   }
 }
